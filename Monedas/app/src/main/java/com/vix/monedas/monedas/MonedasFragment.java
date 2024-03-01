@@ -1,10 +1,7 @@
 package com.vix.monedas.monedas;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +11,6 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.vix.monedas.R;
-import com.vix.monedas.addeditmoneda.AddEditMonedaFragment;
 import com.vix.monedas.data.Evento;
 import com.vix.monedas.data.EventoDbHelper;
 import com.vix.monedas.data.MonedasContrato;
@@ -23,7 +19,6 @@ import com.vix.monedas.monedasdetail.MonedaDetailFragment;
 
 public class MonedasFragment extends Fragment {
 
-    public static final int REQUEST_UPDATE_DELETE_MONEDA = 2;
     private MonedasDbHelper dbHelper;
     private EventoDbHelper eventoDbHelper;
     private ListView monedasListView;
@@ -66,6 +61,8 @@ public class MonedasFragment extends Fragment {
         
         dbHelper = new MonedasDbHelper(requireContext());
         eventoDbHelper = new EventoDbHelper(requireContext());
+
+        dbHelper.onCreate(dbHelper.getWritableDatabase());
         eventoDbHelper.onCreate(eventoDbHelper.getWritableDatabase());
 
         loadMonedas();

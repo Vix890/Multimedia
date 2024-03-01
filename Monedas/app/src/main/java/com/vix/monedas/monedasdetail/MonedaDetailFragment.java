@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -25,7 +24,6 @@ import com.vix.monedas.addeditmoneda.AddEditMonedaFragment;
 import com.vix.monedas.data.Evento;
 import com.vix.monedas.data.EventoDbHelper;
 import com.vix.monedas.data.MonedasDbHelper;
-import com.vix.monedas.monedas.MonedasCursorAdapter;
 
 import java.io.File;
 

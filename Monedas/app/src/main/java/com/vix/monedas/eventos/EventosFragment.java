@@ -15,7 +15,6 @@ import android.widget.ListView;
 
 import com.vix.monedas.R;
 import com.vix.monedas.data.EventoDbHelper;
-import com.vix.monedas.monedas.EventosCursorAdapter;
 import com.vix.monedas.monedas.MonedasFragment;
 
 public class EventosFragment extends Fragment {

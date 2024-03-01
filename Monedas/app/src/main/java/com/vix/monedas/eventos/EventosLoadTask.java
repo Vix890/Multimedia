@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 
 import com.vix.monedas.data.EventoDbHelper;
-import com.vix.monedas.monedas.EventosCursorAdapter;
 
 public class EventosLoadTask extends AsyncTask<Void, Void, Cursor> {
 

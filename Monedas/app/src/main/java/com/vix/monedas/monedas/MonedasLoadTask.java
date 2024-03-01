@@ -2,7 +2,6 @@ package com.vix.monedas.monedas;
 
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.vix.monedas.data.MonedasDbHelper;
 

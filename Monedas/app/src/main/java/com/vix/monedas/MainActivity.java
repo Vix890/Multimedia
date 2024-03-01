@@ -3,7 +3,6 @@ package com.vix.monedas;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.ButtonBarLayout;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -19,13 +18,11 @@ import com.vix.monedas.data.EventoDbHelper;
 import com.vix.monedas.data.MonedasDbHelper;
 import com.vix.monedas.eventos.EventosFragment;
 import com.vix.monedas.monedas.MonedasFragment;
-import com.vix.monedas.monedasdetail.MonedaDetailFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
     Toolbar toolbar;
-    private Fragment currentFragment;
     NavigationView navigationView;
 
     @Override
@@ -50,9 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if (savedInstanceState == null) {
-            MonedasFragment monedasFragment = new MonedasFragment();
-            currentFragment = monedasFragment;
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, monedasFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MonedasFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
     }
@@ -98,9 +93,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (item.getItemId() == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MonedasFragment()).commit();
         } else if (item.getItemId() == R.id.recuperar) {
-            try (MonedasDbHelper dbHelper = new MonedasDbHelper(this)) {
+            try (MonedasDbHelper dbHelper = new MonedasDbHelper(this);
+                 EventoDbHelper eventoDbHelper = new EventoDbHelper(this);
+                 ) {
                 dbHelper.recuperarMonedasBorradas();
-                EventoDbHelper eventoDbHelper = new EventoDbHelper(this);
+
                 Evento evento = new Evento(0, 1, 0, 0, "Recuperar monedas borradas");
                 eventoDbHelper.saveEvento(evento);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MonedasFragment()).commit();
