@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/add_item_moneda"
+        android:icon="@drawable/create_icon"
+        android:orderInCategory="100"
+        android:title="@string/crear"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/edit_item_moneda"
+        android:icon="@drawable/edit"
+        android:orderInCategory="100"
+        android:title="@string/editar"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/delete_item_moneda"
+        android:icon="@drawable/trash"
+        android:orderInCategory="100"
+        android:title="@string/eliminar"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/home_item_moneda"
+        android:icon="@drawable/home_icon"
+        android:iconTint="@color/white"
+        android:orderInCategory="100"
+        android:title="@string/home"
+        app:showAsAction="always" />
+</menu>

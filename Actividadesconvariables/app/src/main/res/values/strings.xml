@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Actividades con variables</string>
+    <string name="nombre">Nombre</string>
+    <string name="btn_enviar">Enviar</string>
+    <string name="btn_regresar">Regresar</string>
+    <string name="btn_salir">Salir</string>
+    <string name="et_nombre1">Nombre</string>
+    <string name="et_nombre2">Nombre</string>
+</resources>
