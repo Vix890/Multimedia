@@ -46,6 +46,8 @@ public class MonedasFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_monedas, container, false);
 
+        requireActivity().setTitle("Monedas");
+
         monedasListView = view.findViewById(R.id.monedas_list);
         monedasAdapter = new MonedasCursorAdapter(requireContext(), null);
 
@@ -64,8 +66,6 @@ public class MonedasFragment extends Fragment {
         
         dbHelper = new MonedasDbHelper(requireContext());
         eventoDbHelper = new EventoDbHelper(requireContext());
-
-        dbHelper.onCreate(dbHelper.getWritableDatabase());
         eventoDbHelper.onCreate(eventoDbHelper.getWritableDatabase());
 
         loadMonedas();

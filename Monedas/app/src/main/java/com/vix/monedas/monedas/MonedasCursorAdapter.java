@@ -19,6 +19,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.vix.monedas.R;
 
+import java.io.File;
+
 public class MonedasCursorAdapter extends CursorAdapter {
 
     public MonedasCursorAdapter(Context context, Cursor c) {
@@ -42,10 +44,12 @@ public class MonedasCursorAdapter extends CursorAdapter {
 
         taskViewName.setText(name);
 
+        File imagePath = context.getDir("imagenes", Context.MODE_PRIVATE);
+
         Glide
                 .with(context)
                 .asBitmap()
-                .load(Uri.parse("file:///android_asset/" + avatarUri))
+                .load(Uri.parse("file://" + imagePath + "/" + avatarUri))
                 .error(R.drawable.exit_icon)
                 .centerCrop()
                 .into(new BitmapImageViewTarget(avatar) {

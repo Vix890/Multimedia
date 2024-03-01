@@ -1,5 +1,6 @@
 package com.vix.monedas.monedasdetail;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -25,6 +26,8 @@ import com.vix.monedas.data.Evento;
 import com.vix.monedas.data.EventoDbHelper;
 import com.vix.monedas.data.MonedasDbHelper;
 import com.vix.monedas.monedas.MonedasCursorAdapter;
+
+import java.io.File;
 
 public class MonedaDetailFragment extends Fragment {
 
@@ -90,8 +93,11 @@ public class MonedaDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_moneda_detail, container, false);
 
+        requireActivity().setTitle("Detalle Moneda");
+
         loadMoneda(monedaId);
         InitializeFields(view);
+
 
         btnVolver.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager().popBackStack();
@@ -146,11 +152,11 @@ public class MonedaDetailFragment extends Fragment {
     private void loadMoneda(String _id) {
         new GetMonedaByIdTask(dbHelper, _id, moneda -> {
             if (moneda != null) {
-                Evento evento = new Evento(0, 0, 0, 1, "Get moneda by id" + _id);
+                File imagePath = requireContext().getDir("imagenes", Context.MODE_PRIVATE);
                 Glide
                         .with(requireActivity())
                         .asBitmap()
-                        .load(Uri.parse("file:///android_asset/" + moneda.getImagen()))
+                        .load(Uri.parse("file://" + imagePath + "/" + moneda.getImagen()))
                         .error(R.drawable.exit_icon)
                         .fitCenter()
                         .into(imagenMoneda);
@@ -159,6 +165,9 @@ public class MonedaDetailFragment extends Fragment {
                 paisMoneda.setText(moneda.getPais());
                 anioMoneda.setText(moneda.getFecha());
                 materialMoneda.setText(moneda.getMaterial());
+
+                Evento evento = new Evento(0, 0, 0, 1, "Get moneda by id" + _id);
+                eventoDbHelper.saveEvento(evento);
             } else {
                 Toast.makeText(requireContext(), "No se encontró la moneda", Toast.LENGTH_SHORT).show();
             }

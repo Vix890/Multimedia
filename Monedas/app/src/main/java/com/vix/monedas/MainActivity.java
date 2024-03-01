@@ -14,6 +14,8 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 import com.vix.monedas.addeditmoneda.AddEditMonedaFragment;
+import com.vix.monedas.data.Evento;
+import com.vix.monedas.data.EventoDbHelper;
 import com.vix.monedas.data.MonedasDbHelper;
 import com.vix.monedas.eventos.EventosFragment;
 import com.vix.monedas.monedas.MonedasFragment;
@@ -98,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (item.getItemId() == R.id.recuperar) {
             try (MonedasDbHelper dbHelper = new MonedasDbHelper(this)) {
                 dbHelper.recuperarMonedasBorradas();
+                EventoDbHelper eventoDbHelper = new EventoDbHelper(this);
+                Evento evento = new Evento(0, 1, 0, 0, "Recuperar monedas borradas");
+                eventoDbHelper.saveEvento(evento);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MonedasFragment()).commit();
             }
         } else if (item.getItemId() == R.id.nav_eventos) {

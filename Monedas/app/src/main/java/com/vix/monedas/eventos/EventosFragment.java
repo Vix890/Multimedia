@@ -33,6 +33,7 @@ public class EventosFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -42,7 +43,8 @@ public class EventosFragment extends Fragment {
 
         eventosListView = view.findViewById(R.id.eventos_list);
         eventosAdapter = new EventosCursorAdapter(requireContext(), null);
-        setHasOptionsMenu(true);
+
+        requireActivity().setTitle("Eventos");
 
         eventosListView.setAdapter(eventosAdapter);
 

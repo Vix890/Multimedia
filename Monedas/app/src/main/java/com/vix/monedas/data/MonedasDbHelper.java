@@ -2,6 +2,7 @@ package com.vix.monedas.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -11,14 +12,21 @@ import com.vix.monedas.data.MonedasContrato.MonedasEntry;
 import android.database.SQLException;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Objects;
 
 public class MonedasDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "Monedas.db";
+    private Context context;
 
     public MonedasDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -42,7 +50,39 @@ public class MonedasDbHelper extends SQLiteOpenHelper {
 
             db.execSQL(query);
 
+            copyImagesFromAssets(context);
+
             insertData(db);
+        }
+    }
+
+    private void copyImagesFromAssets(Context context) {
+        Log.v("MonedasDbHelper", "Copiando imágenes desde assets a la carpeta interna");
+        AssetManager assetManager = context.getAssets();
+        String[] imageNames;
+        try {
+            imageNames = assetManager.list(""); // Esto obtiene todos los archivos en "assets"
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        File internalDir = context.getDir("imagenes", Context.MODE_PRIVATE);
+
+        assert imageNames != null;
+        for (String imageName : imageNames) {
+            try (InputStream in = assetManager.open(imageName);
+                 OutputStream out = new FileOutputStream(new File(internalDir, imageName))) {
+
+                byte[] buffer = new byte[1024];
+                int read;
+
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
